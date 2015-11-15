@@ -1,30 +1,28 @@
-# irc-moo http api
-
 ## HTTP API
 
 #### POST /user
 Create user
 
-#### PUT /user
-Update user
+#### PUT /user/:user-name
+Update a specific user.
 
 #### POST /auth
-Authenticate user
+Authenticate user. Expects an object with a username and password field.
 
 #### GET /reccomended-channels
 Get recommended channels/communities. This may be automated and/or be user specific at some point.
 
 #### GET /network
-list of known networks
+List of known networks.
 
-#### GET /network/:channel
-list of known channels under a network
+#### GET /network/:network-name
+List of known channels in a specific network.
 
 #### GET /archive/:network/:channel?[fromDate,toDate]
-get message logs from channel
+Get message logs from channel.
 
 #### GET /archive/:network?[fromDate,toDate]
-get message logs from network
+Get message logs from network.
 
 ## Usage
 
