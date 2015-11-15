@@ -1,4 +1,4 @@
-## HTTP API
+# HTTP API
 
 #### POST /user
 Create user
