@@ -1,0 +1,22 @@
+{
+  "name": "irc-moo-backend",
+  "version": "0.0.0",
+  "main": "server.js",
+  "author": "irc-moo",
+  "license": "ISC",
+  "dependencies": {
+    "boom": "^2.6.1",
+    "config": "^1.8.1",
+    "good": "^5.1.1",
+    "good-console": "^2.1.0",
+    "hapi": "^8.1.0",
+    "pg": "^3.6.3",
+    "pg-hstore": "^2.3.1",
+    "require-directory": "^2.0.0",
+    "sequelize": "^2.0.0-rc7"
+  },
+  "devDependencies": {
+    "lab": "^4.7.0",
+    "sqlite3": "^3.0.2"
+  }
+}
