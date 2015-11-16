@@ -3,24 +3,18 @@ var path = require('path');
 var settings = require('config');
 
 var routes = require('./routes');
-var plugins = require('./plugins');
-var models = require('./models');
+// var plugins = require('./plugins');
 
-var server = new Hapi.Server({
-  connections: {
-    routes: {
-      cors: settings.cors
-    }
-  }
-});
+var server = new Hapi.Server();
 
 server.connection({
-  port: settings.port,
-  host: settings.host
+  port: settings.port
 });
 
-server.start(function(){
-  server.log('info', 'Server running at: ' + server.info.uri);
-});
+routes.forEach(function(route) {
+  server.route(route);
+})
 
-module.exports = server;
+server.start(function () {
+  console.log('Server running at:', server.info.uri, '\nconfig:\n', JSON.stringify(settings, 2, 2));
+});
