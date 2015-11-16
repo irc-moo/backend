@@ -1,4 +1,6 @@
-# HTTP API
+# irc-moo rest api service
+
+## doc
 
 #### POST /user
 Create user

@@ -1,5 +1,4 @@
 var Hapi = require('hapi');
-
 var path = require('path');
 var settings = require('config');
 
@@ -14,12 +13,21 @@ var server = new Hapi.Server({
     }
   }
 });
-server.connection({port:settings.port, host:settings.host});
+
+server.connection({
+  port: settings.port,
+  host:settings.host
+});
 
 // Export the server to be required elsewhere.
 module.exports = server;
 
-var initDb = function(cb){
+// If someone runs: "node server.js" then automatically start the server
+if (path.basename(process.argv[1],'.js') == path.basename(__filename,'.js')) {
+  setup(start);
+}
+
+function initDb(cb) {
   var sequelize = models.sequelize;
 
   //Test if we're in a sqlite memory database. we may need to run migrations.
@@ -36,7 +44,7 @@ var initDb = function(cb){
   }
 };
 
-var setup = function(done){
+function setup(done) {
 
 	//Register all plugins
 	server.register(plugins, function (err) {
@@ -53,15 +61,8 @@ var setup = function(done){
   });
 };
 
-var start = function(){
+function start() {
   server.start(function(){
     server.log('info', 'Server running at: ' + server.info.uri);
   });
 };
-
-// If someone runs: "node server.js" then automatically start the server
-if (path.basename(process.argv[1],'.js') == path.basename(__filename,'.js')) {
-  setup(function(){
-    start();
-  });
-}
