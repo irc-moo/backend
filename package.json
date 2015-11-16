@@ -1,9 +1,8 @@
 {
-  "name": "irc-moo-backend",
+  "name": "irc-moo-rest-api-service",
   "version": "0.0.0",
   "main": "server.js",
   "author": "irc-moo",
-  "license": "ISC",
   "dependencies": {
     "boom": "^2.6.1",
     "config": "^1.8.1",

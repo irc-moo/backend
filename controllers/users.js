@@ -1,10 +1,9 @@
-var models = require('../models');
 
 module.exports = {
 	get:function (request, reply) {
-    reply(models.User.findAll());
+    reply('test');
 	},
 	salute:function (request, reply) {
-	  reply('Hello, ' + encodeURIComponent(request.params.name) + '!');
+	  reply('test');
 	}
 };
