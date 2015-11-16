@@ -1,5 +1,5 @@
 {
-	"port": 4023,
+	"port": 4001,
   "database" : {
     "username": "development_user",
     "password": "development_password",
