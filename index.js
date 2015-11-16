@@ -8,7 +8,7 @@ var routes = require('./routes');
 var server = new Hapi.Server();
 
 server.connection({
-  port: settings.port
+  port: process.env.PORT || settings.port
 });
 
 routes.forEach(function(route) {
