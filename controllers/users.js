@@ -1,9 +1,16 @@
+var db = require('../db');
 
 module.exports = {
-	get:function (request, reply) {
+	post(request, reply) {
+		const username = request.payload.username;
+		const password = request.payload.password;
+
+		console.log(username, password);
+	},
+	get(request, reply) {
     reply('test');
 	},
-	salute:function (request, reply) {
+	put(request, reply) {
 	  reply('test');
 	}
 };

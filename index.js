@@ -1,19 +1,30 @@
-var Hapi = require('hapi');
-var path = require('path');
+const Hapi = require('hapi');
+const path = require('path');
 
-var routes = require('./routes');
-var plugins = require('./plugins');
+const routes = require('./routes');
+const plugins = require('./plugins');
 
-var server = new Hapi.Server();
+if(module.parent) {
+  module.exports = start;
+} else {
+  const server = start(process.env.PORT);
+  module.exports = server;
+}
 
-server.connection({
-  port: process.env.PORT
-});
+function start(port) {
+  const server = new Hapi.Server();
 
-routes.forEach(function(route) {
-  server.route(route);
-});
+  server.connection({
+    port
+  });
 
-server.start(function () {
-  console.log('Server running at:', server.info.uri);
-});
+  routes.forEach((route) => {
+    server.route(route);
+  });
+
+  server.start(() => {
+    console.log('Server running at:', server.info.uri);
+  });
+
+  return server;
+}

@@ -8,17 +8,21 @@
     "good": "^5.1.1",
     "good-console": "^2.1.0",
     "hapi": "^8.1.0",
+    "joi": "^7.0.0",
     "pg": "^3.6.3",
     "pg-hstore": "^2.3.1",
     "pg-native": "^1.9.0",
+    "pg-promise": "^2.3.1",
     "pg-query-stream": "^1.0.0",
     "require-directory": "^2.0.0"
   },
   "devDependencies": {
-    "lab": "^4.7.0"
+    "tap": "^2.2.1",
+    "node-fetch": "^1.3.3"
   },
   "scripts": {
-    "start": "node index.js",
-    "local-dev": "DB=postgres://chlaakbgmppjqf:lY2kmEqX39IijGz5U32SpyAOz4@ec2-107-21-222-62.compute-1.amazonaws.com:5432/d2836sqk1qf6t0 && nodemon index.js"
+    "test": "tap test/*.js",
+    "start": "node --harmony_destructuring index.js",
+    "local-dev": "PORT=4004 && DB=postgres://chlaakbgmppjqf:lY2kmEqX39IijGz5U32SpyAOz4@ec2-107-21-222-62.compute-1.amazonaws.com:5432/d2836sqk1qf6t0 && nodemon --harmony_destructuring index.js"
   }
 }

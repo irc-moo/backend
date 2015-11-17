@@ -1,5 +1,7 @@
-var controllers = require('./controllers');
-var noop = function(req, reply) { reply('noop') }
+const { user } = require('./controllers');
+const validation = require('./validation');
+
+const noop = function(req, reply) { reply('noop') }
 
 module.exports = [
   {
@@ -8,14 +10,25 @@ module.exports = [
     handler: noop,
     config: {
       description: 'Create user'
+      validate: {
+        payload: {
+          username: validation.username,
+          password: validation.password
+        }
+      }
     }
   },
   {
     method: 'PUT',
-    path: '/user/:username',
+    path: '/user/{username}',
     handler: noop,
     config: {
-      description: 'Update a specific user'
+      description: 'Update a specific user',
+      validate: {
+        params: {
+          username: validation.username
+        }
+      }
     }
   },
   {
@@ -24,6 +37,12 @@ module.exports = [
     handler: noop,
     config: {
       description: 'Authenticate user, Expects an object with username and password fields.'
+    },
+    validate: {
+      payload: {
+        username: validation.username,
+        password: validation.password
+      }
     }
   },
   {
@@ -45,26 +64,50 @@ module.exports = [
   },
   {
     method: 'GET',
-    path: '/network/:network-name',
+    path: '/network/{network}',
     handler: noop,
     config: {
-      description: 'Get a list of known channels in a specific network.'
+      description: 'Get a list of known channels in a specific network.',
+      validate: {
+        params: {
+          network: validation.network
+        }
+      }
     }
   },
   {
     method: 'GET',
-    path: '/archive/:network/:channel',
+    path: '/archive/{network}/{channel}',
     handler: noop,
     config: {
-      description: 'Get message logs from a specific channel with a specific network.'
+      description: 'Get message logs from a specific channel with a specific network.',
+      validate: {
+        params: {
+          network: validation.network,
+          channel: validation.channel
+        },
+        query: {
+          fromEpochTime: validation.epochTime,
+          toEpochTime: validation.epochTime
+        }
+      }
     }
   },
   {
     method: 'GET',
-    path: '/archive/:network',
+    path: '/archive/{network}',
     handler: noop,
     config: {
-      description: 'Get message logs from a specific network.'
+      description: 'Get message logs from a specific network.',
+      validate: {
+        params: {
+          network: validation.network
+        },
+        query: {
+          fromEpochTime: validation.epochTime,
+          toEpochTime: validation.epochTime
+        }
+      }
     }
   }
 ];

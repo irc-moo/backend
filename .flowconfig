@@ -1,0 +1,7 @@
+[ignore]
+
+[include]
+./**.js
+[libs]
+
+[options]
