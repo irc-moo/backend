@@ -1,31 +1,5 @@
 # irc-moo rest api service
 
-## doc
-
-#### POST /user
-Create user
-
-#### PUT /user/:user-name
-Update a specific user.
-
-#### POST /auth
-Authenticate user. Expects an object with a username and password field.
-
-#### GET /reccomended-channels
-Get recommended channels/communities. This may be automated and/or be user specific at some point.
-
-#### GET /network
-List of known networks.
-
-#### GET /network/:network-name
-List of known channels in a specific network.
-
-#### GET /archive/:network/:channel?[fromDate,toDate]
-Get message logs from channel.
-
-#### GET /archive/:network?[fromDate,toDate]
-Get message logs from network.
-
 ## Usage
 
 Just clone the repository:

@@ -5,20 +5,20 @@
   "author": "irc-moo",
   "dependencies": {
     "boom": "^2.6.1",
-    "config": "^1.8.1",
     "good": "^5.1.1",
     "good-console": "^2.1.0",
     "hapi": "^8.1.0",
     "pg": "^3.6.3",
     "pg-hstore": "^2.3.1",
-    "require-directory": "^2.0.0",
-    "sequelize": "^2.0.0-rc7"
+    "pg-native": "^1.9.0",
+    "pg-query-stream": "^1.0.0",
+    "require-directory": "^2.0.0"
   },
   "devDependencies": {
-    "lab": "^4.7.0",
-    "sqlite3": "^3.0.2"
+    "lab": "^4.7.0"
   },
   "scripts": {
-    "start": "NODE_ENV=development node index.js"  
+    "start": "node index.js",
+    "local-dev": "DB=postgres://chlaakbgmppjqf:lY2kmEqX39IijGz5U32SpyAOz4@ec2-107-21-222-62.compute-1.amazonaws.com:5432/d2836sqk1qf6t0 && nodemon index.js"
   }
 }
