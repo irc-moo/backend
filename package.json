@@ -4,10 +4,13 @@
   "main": "server.js",
   "author": "irc-moo",
   "dependencies": {
+    "bluebird": "^3.0.5",
     "boom": "^2.6.1",
     "good": "^5.1.1",
     "good-console": "^2.1.0",
     "hapi": "^8.1.0",
+    "hapi-swaggered": "^2.4.1",
+    "hapi-swaggered-ui": "^2.1.1",
     "joi": "^7.0.0",
     "pg": "^3.6.3",
     "pg-hstore": "^2.3.1",
@@ -23,6 +26,6 @@
   "scripts": {
     "test": "tap test/*.js",
     "start": "node --harmony_destructuring index.js",
-    "local-dev": "PORT=4004 && DB=postgres://chlaakbgmppjqf:lY2kmEqX39IijGz5U32SpyAOz4@ec2-107-21-222-62.compute-1.amazonaws.com:5432/d2836sqk1qf6t0 && nodemon --harmony_destructuring index.js"
+    "local-dev": "PORT=4004 DB=postgres://chlaakbgmppjqf:lY2kmEqX39IijGz5U32SpyAOz4@ec2-107-21-222-62.compute-1.amazonaws.com:5432/d2836sqk1qf6t0?ssl=true nodemon index.js"
   }
 }

@@ -1,30 +1,4 @@
-const Hapi = require('hapi');
-const path = require('path');
+const Server = require('./server');
 
-const routes = require('./routes');
-const plugins = require('./plugins');
-
-if(module.parent) {
-  module.exports = start;
-} else {
-  const server = start(process.env.PORT);
-  module.exports = server;
-}
-
-function start(port) {
-  const server = new Hapi.Server();
-
-  server.connection({
-    port
-  });
-
-  routes.forEach((route) => {
-    server.route(route);
-  });
-
-  server.start(() => {
-    console.log('Server running at:', server.info.uri);
-  });
-
-  return server;
-}
+const server = Server(5000 || process.env.PORT);
+module.exports = server;

@@ -1,4 +1,4 @@
-const { user } = require('./controllers');
+const user = require('./controllers/user');
 const validation = require('./validation');
 
 const noop = function(req, reply) { reply('noop') }
@@ -7,13 +7,15 @@ module.exports = [
   {
     method: 'POST',
     path: '/user',
-    handler: noop,
+    handler: user.create,
     config: {
-      description: 'Create user'
+      tags: ['api'],
+      description: 'Create user.',
       validate: {
         payload: {
-          username: validation.username,
-          password: validation.password
+          username: validation.usernameRequired,
+          password: validation.password,
+          email: validation.email
         }
       }
     }
@@ -21,28 +23,58 @@ module.exports = [
   {
     method: 'PUT',
     path: '/user/{username}',
-    handler: noop,
+    handler: user.update,
     config: {
-      description: 'Update a specific user',
+      tags: ['api'],
+      description: 'Update a specific user.',
       validate: {
         params: {
-          username: validation.username
+          username: validation.usernameRequired
+        },
+        payload: {
+          username: validation.username,
+          password: validation.password,
+          email: validation.email
+        }
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/user/{username}',
+    handler: user.get,
+    config: {
+      tags: ['api'],
+      description: 'Get a specific user.',
+      validate: {
+        params: {
+          username: validation.usernameRequired
         }
       }
     }
   },
   {
     method: 'POST',
-    path: '/auth',
-    handler: noop,
+    path: '/login',
+    handler: user.login,
     config: {
-      description: 'Authenticate user, Expects an object with username and password fields.'
-    },
-    validate: {
-      payload: {
-        username: validation.username,
-        password: validation.password
+      tags: ['api'],
+      description: 'Generate session token.',
+      validate: {
+        payload: {
+          username: validation.usernameRequired,
+          password: validation.passwordRequired
+        }
       }
+    }
+  },
+  {
+    method: 'POST',
+    path: '/logout',
+    handler: user.logout,
+    config: {
+      tags: ['api'],
+      description: 'Destroy session token.'
     }
   },
   {
@@ -50,6 +82,7 @@ module.exports = [
     path: '/reccomended-channels',
     handler: noop,
     config: {
+      tags: ['api'],
       description: 'Get reccomended channels.',
       notes: 'This may be authomated and/or be custom for each users usage trends at some point in the future.'
     }
@@ -59,6 +92,7 @@ module.exports = [
     path: '/network',
     handler: noop,
     config: {
+      tags: ['api'],
       description: 'Get a list of all known irc networks.'
     }
   },
@@ -67,6 +101,7 @@ module.exports = [
     path: '/network/{network}',
     handler: noop,
     config: {
+      tags: ['api'],
       description: 'Get a list of known channels in a specific network.',
       validate: {
         params: {
@@ -80,6 +115,7 @@ module.exports = [
     path: '/archive/{network}/{channel}',
     handler: noop,
     config: {
+      tags: ['api'],
       description: 'Get message logs from a specific channel with a specific network.',
       validate: {
         params: {
@@ -98,6 +134,7 @@ module.exports = [
     path: '/archive/{network}',
     handler: noop,
     config: {
+      tags: ['api'],
       description: 'Get message logs from a specific network.',
       validate: {
         params: {
