@@ -4,6 +4,7 @@ const pg = require('pg-promise')({
 });
 
 const constants = require('./constants');
+const ircServers = require('./ircservers')
 const conString = process.env.DB;
 
 function createUserTable() {
@@ -26,7 +27,60 @@ function createUserTable() {
     })
 }
 
+
+function createNetworkTable() {
+  const createNetworkTableQuery =
+    `CREATE TABLE IF NOT EXISTS networks (
+        id serial primary key,
+        networkName varchar(80) unique,
+        encoding varchar(30)
+  );
+  CREATE TABLE IF NOT EXISTS networkServers (
+        id serial primary key,
+        networkId serial references networks(id),
+        serverAddress   varchar(80)
+  );`
+
+  return pg(conString)
+    .query(createNetworkTableQuery)
+    .then(() => {
+      console.log('Created networks and networkservers tables [OK]')
+    })
+    .catch((err) => {
+      throw err;
+    })
+}
+
+function LoadNetworkData() {
+  var tempId = 0;
+  var promises = ircServers.IRCSERVERS.map((network) => {
+    const InsertNetworkQuery = `INSERT INTO networks (networkname, encoding) VALUES ('${network.Name}', '${network.Encoding}') RETURNING id;`;
+    return pg(conString)
+      .query(InsertNetworkQuery)
+      .then((data) => {
+        tempId = data;
+        network.servers.map((server) => {
+          const InsertNetworkServerQuery =
+            `INSERT INTO networkservers (networkid, serveraddress) VALUES (${tempId[0].id}, '${server}');`;
+          pg(conString)
+            .query(InsertNetworkServerQuery)
+            .catch((err) => {
+              console.log(err);
+              throw err;
+            })
+        })
+      })
+      .catch((err) => {
+        throw err
+      })
+  })
+  return Promise.all(promises);
+}
+
 createUserTable();
+createNetworkTable().then( () => LoadNetworkData());
+
+
 
 module.exports = {
   createUser(username, password, email) {
@@ -48,5 +102,11 @@ module.exports = {
   updateUser(username, password, email) {
     return pg(conString)
       .query('')
+  },
+  
+  getNetwork() {
+    return pg(conString)
+      .query('SELECT * FROM networks')
   }
+  
 }
